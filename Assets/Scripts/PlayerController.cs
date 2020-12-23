@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,6 +39,13 @@ public class PlayerController : MonoBehaviour
         {
             rb_player.AddForce(speed * Time.deltaTime, 0, 0);
         }
+
+        if (health == 0)
+        {
+            SceneManager.LoadScene("maze");
+            health = 5;
+            score = 0;
+        }
     }
     void OnTriggerEnter(Collider other)
     {
@@ -51,6 +59,10 @@ public class PlayerController : MonoBehaviour
         {
             health--;
             Debug.Log($"Health: {health}");
+        }
+        if (other.CompareTag("Goal"))
+        {
+            Debug.Log("You win!");
         }
     }
 }
